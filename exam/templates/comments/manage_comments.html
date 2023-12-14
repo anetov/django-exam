@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Manage Comments</h1>
+    <ul>
+        {% for comment in comments %}
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                <a href="{% url 'edit_comment' comment.id %}">Edit</a>
+                <button type="submit">Delete</button>
+            </form>
+        {% empty %}
+            <li>No comments to display.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

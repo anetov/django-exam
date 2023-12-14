@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .login-container {
+        max-width: 50%;
+        margin: auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        background-color: #f8f9fa;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .login-form label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .login-form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+    }
+
+    .login-form button {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        background-color: #28a745;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .login-form button:hover {
+        background-color: #218838;
+    }
+
+    .login-links {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="login-container">
+    <h1 class="login-header">Войти</h1>
+
+    <form method="post" action="." class="login-form">
+        {% csrf_token %}
+
+        <div>
+            <label>Логин</label>
+            {{ form.username }}
+        </div>
+
+        <div>
+            <label>Пароль</label>
+            {{ form.password }}
+        </div>
+
+        {% if form.errors or form.non_field.errors %}
+            <div class="alert alert-danger">
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <button type="submit">Войти</button>
+    </form>
+
+    <div class="login-links">
+        <a href="{% url 'signup' %}">Регистрация</a> |
+        <a href="{% url 'reset' %}">Забыли пароль?</a>
+    </div>
+</div>
+{% endblock %}

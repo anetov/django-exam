@@ -1,0 +1,31 @@
+{% if request.user.is_authenticated %}
+<nav class="d-flex justify-content-evenly">
+    <!-- Ссылка на Публикации -->
+    <div class="menu-item" style="padding-right: 20px;">
+        <a href="{% url 'posts' %}" class="menu-link">
+            <span class="menu-title fs-5 text-white">Публикации</span>
+        </a>
+    </div>
+
+    <!-- Ссылка на Создание Публикации -->
+    <div class="menu-item" style="padding-right: 20px;">
+        <a href="{% url 'create_post' %}" class="menu-link">
+            <span class="menu-title fs-5 text-white">Создать Публикацию</span>
+        </a>
+    </div>
+
+    <!-- Ссылка на Профиль Пользователя -->
+    <div class="menu-item" style="padding-right: 20px;">
+        <a href="{% url 'profile' %}" class="menu-link">
+            <span class="menu-title fs-5 text-white">Профиль</span>
+        </a>
+    </div>
+
+    <!-- Ссылка для Выхода -->
+    <div class="menu-item" style="padding-right: 20px;">
+        <a href="{% url 'logout' %}" class="menu-link">
+            <span class="menu-title fs-5 text-white">Выход</span>
+        </a>
+    </div>
+</nav>
+{% endif %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-6 text-center">Публикации</h1>
+<div class="row">
+    {% for post in posts %}
+    <div class="col-md-3 mb-3 px-5">
+        <div class="card" style="width: 18rem;">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="img-fluid">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.content }}</p>
+                <p class="card-text"><small class="text-muted">Выложен {{ post.created_at|date:"Y-m-d H:i" }}</small></p>
+                {% if post.author == request.user %}
+                    <a href="{% url 'edit_post' post.id %}" class="btn btn-primary">Edit</a>
+                    <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Delete</a>
+                {% endif %}
+
+                {% for comment in post.comments.all %}
+                {{ comment.content }}
+                {% endfor %}
+                <!-- Форма для добавления комментария -->
+                <form method="post" action="{% url 'create_comment' post.id %}">
+                    {% csrf_token %}
+                    {{ comment_form }}
+                    <button type="submit" class="btn btn-secondary">Добавить комментарий</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
